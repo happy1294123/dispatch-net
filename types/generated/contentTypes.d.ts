@@ -362,42 +362,6 @@ export interface AdminTransferTokenPermission extends Schema.CollectionType {
   };
 }
 
-export interface ApiAccountAccount extends Schema.CollectionType {
-  collectionName: 'accounts';
-  info: {
-    singularName: 'account';
-    pluralName: 'accounts';
-    displayName: 'account';
-    description: '';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    account: Attribute.String & Attribute.Required & Attribute.Unique;
-    name: Attribute.String & Attribute.Required & Attribute.Unique;
-    password: Attribute.Password & Attribute.Required;
-    point: Attribute.Integer;
-    last_login: Attribute.DateTime;
-    note: Attribute.Text;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::account.account',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::account.account',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
 export interface ApiGroupGroup extends Schema.CollectionType {
   collectionName: 'groups';
   info: {
@@ -412,6 +376,11 @@ export interface ApiGroupGroup extends Schema.CollectionType {
     name: Attribute.String;
     isDefault: Attribute.Boolean;
     point_baseline: Attribute.Integer;
+    users: Attribute.Relation<
+      'api::group.group',
+      'oneToMany',
+      'plugin::users-permissions.user'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -699,7 +668,6 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
   };
   options: {
     draftAndPublish: false;
-    timestamps: true;
   };
   attributes: {
     username: Attribute.String &
@@ -728,6 +696,17 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       'manyToOne',
       'plugin::users-permissions.role'
     >;
+    nickname: Attribute.String & Attribute.Required & Attribute.Unique;
+    phone: Attribute.String & Attribute.Required;
+    group: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'manyToOne',
+      'api::group.group'
+    >;
+    line_id: Attribute.String;
+    note: Attribute.Text;
+    isActive: Attribute.Boolean & Attribute.DefaultTo<true>;
+    main_point: Attribute.Integer & Attribute.DefaultTo<0>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -755,7 +734,6 @@ declare module '@strapi/types' {
       'admin::api-token-permission': AdminApiTokenPermission;
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
-      'api::account.account': ApiAccountAccount;
       'api::group.group': ApiGroupGroup;
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;

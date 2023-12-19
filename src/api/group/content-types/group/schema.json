@@ -19,6 +19,12 @@
     },
     "point_baseline": {
       "type": "integer"
+    },
+    "users": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "plugin::users-permissions.user",
+      "mappedBy": "group"
     }
   }
 }
