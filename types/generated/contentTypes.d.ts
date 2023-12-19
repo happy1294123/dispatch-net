@@ -399,6 +399,81 @@ export interface ApiGroupGroup extends Schema.CollectionType {
   };
 }
 
+export interface ApiLoginLogLoginLog extends Schema.CollectionType {
+  collectionName: 'login_logs';
+  info: {
+    singularName: 'login-log';
+    pluralName: 'login-logs';
+    displayName: 'Login_log';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    ip: Attribute.String;
+    device: Attribute.Enumeration<['mobile', 'desktop']>;
+    isSuccess: Attribute.Boolean & Attribute.DefaultTo<true>;
+    users: Attribute.Relation<
+      'api::login-log.login-log',
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::login-log.login-log',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::login-log.login-log',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiPointLogPointLog extends Schema.CollectionType {
+  collectionName: 'point_logs';
+  info: {
+    singularName: 'point-log';
+    pluralName: 'point-logs';
+    displayName: 'Point_log';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    edit_point: Attribute.Integer & Attribute.Required & Attribute.DefaultTo<0>;
+    cause: Attribute.String;
+    balance: Attribute.Integer;
+    user: Attribute.Relation<
+      'api::point-log.point-log',
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::point-log.point-log',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::point-log.point-log',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface PluginUploadFile extends Schema.CollectionType {
   collectionName: 'files';
   info: {
@@ -707,6 +782,16 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
     note: Attribute.Text;
     isActive: Attribute.Boolean & Attribute.DefaultTo<true>;
     main_point: Attribute.Integer & Attribute.DefaultTo<0>;
+    login_logs: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'oneToMany',
+      'api::login-log.login-log'
+    >;
+    point_logs: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'oneToMany',
+      'api::point-log.point-log'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -735,6 +820,8 @@ declare module '@strapi/types' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'api::group.group': ApiGroupGroup;
+      'api::login-log.login-log': ApiLoginLogLoginLog;
+      'api::point-log.point-log': ApiPointLogPointLog;
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;
       'plugin::i18n.locale': PluginI18NLocale;

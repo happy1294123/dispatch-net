@@ -1,0 +1,32 @@
+{
+  "kind": "collectionType",
+  "collectionName": "point_logs",
+  "info": {
+    "singularName": "point-log",
+    "pluralName": "point-logs",
+    "displayName": "Point_log"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "edit_point": {
+      "type": "integer",
+      "default": 0,
+      "required": true
+    },
+    "cause": {
+      "type": "string"
+    },
+    "balance": {
+      "type": "integer"
+    },
+    "user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "point_logs"
+    }
+  }
+}

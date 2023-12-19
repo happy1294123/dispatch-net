@@ -93,6 +93,18 @@
     "main_point": {
       "type": "integer",
       "default": 0
+    },
+    "login_logs": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::login-log.login-log",
+      "mappedBy": "users"
+    },
+    "point_logs": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::point-log.point-log",
+      "mappedBy": "user"
     }
   }
 }
