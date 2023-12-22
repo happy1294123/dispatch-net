@@ -362,118 +362,6 @@ export interface AdminTransferTokenPermission extends Schema.CollectionType {
   };
 }
 
-export interface ApiGroupGroup extends Schema.CollectionType {
-  collectionName: 'groups';
-  info: {
-    singularName: 'group';
-    pluralName: 'groups';
-    displayName: 'Group';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    name: Attribute.String;
-    isDefault: Attribute.Boolean;
-    point_baseline: Attribute.Integer;
-    users: Attribute.Relation<
-      'api::group.group',
-      'oneToMany',
-      'plugin::users-permissions.user'
-    >;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::group.group',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::group.group',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
-export interface ApiLoginLogLoginLog extends Schema.CollectionType {
-  collectionName: 'login_logs';
-  info: {
-    singularName: 'login-log';
-    pluralName: 'login-logs';
-    displayName: 'Login_log';
-    description: '';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    ip: Attribute.String;
-    device: Attribute.Enumeration<['mobile', 'desktop']>;
-    isSuccess: Attribute.Boolean & Attribute.DefaultTo<true>;
-    users: Attribute.Relation<
-      'api::login-log.login-log',
-      'manyToOne',
-      'plugin::users-permissions.user'
-    >;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::login-log.login-log',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::login-log.login-log',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
-export interface ApiPointLogPointLog extends Schema.CollectionType {
-  collectionName: 'point_logs';
-  info: {
-    singularName: 'point-log';
-    pluralName: 'point-logs';
-    displayName: 'Point_log';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    edit_point: Attribute.Integer & Attribute.Required & Attribute.DefaultTo<0>;
-    cause: Attribute.String;
-    balance: Attribute.Integer;
-    user: Attribute.Relation<
-      'api::point-log.point-log',
-      'manyToOne',
-      'plugin::users-permissions.user'
-    >;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::point-log.point-log',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::point-log.point-log',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
 export interface PluginUploadFile extends Schema.CollectionType {
   collectionName: 'files';
   info: {
@@ -792,6 +680,16 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       'oneToMany',
       'api::point-log.point-log'
     >;
+    banks: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'oneToMany',
+      'api::bank.bank'
+    >;
+    cryptos: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'oneToMany',
+      'api::crypto.crypto'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -809,6 +707,251 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
   };
 }
 
+export interface ApiAnnouncementAnnouncement extends Schema.CollectionType {
+  collectionName: 'announcements';
+  info: {
+    singularName: 'announcement';
+    pluralName: 'announcements';
+    displayName: 'Announcement';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    title: Attribute.String & Attribute.Required;
+    type: Attribute.Enumeration<['TOP', 'NEW', 'SYSTEM']> & Attribute.Required;
+    start: Attribute.DateTime & Attribute.Required;
+    end: Attribute.DateTime & Attribute.Required;
+    content: Attribute.RichText & Attribute.Required;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::announcement.announcement',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::announcement.announcement',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiBankBank extends Schema.CollectionType {
+  collectionName: 'banks';
+  info: {
+    singularName: 'bank';
+    pluralName: 'banks';
+    displayName: 'Bank';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    bank_name: Attribute.String;
+    branch_name: Attribute.String;
+    account_name: Attribute.String;
+    account: Attribute.String;
+    user: Attribute.Relation<
+      'api::bank.bank',
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<'api::bank.bank', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<'api::bank.bank', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+  };
+}
+
+export interface ApiCryptoCrypto extends Schema.CollectionType {
+  collectionName: 'cryptos';
+  info: {
+    singularName: 'crypto';
+    pluralName: 'cryptos';
+    displayName: 'Crypto';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    address: Attribute.String;
+    user: Attribute.Relation<
+      'api::crypto.crypto',
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::crypto.crypto',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::crypto.crypto',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiGroupGroup extends Schema.CollectionType {
+  collectionName: 'groups';
+  info: {
+    singularName: 'group';
+    pluralName: 'groups';
+    displayName: 'Group';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    name: Attribute.String;
+    isDefault: Attribute.Boolean;
+    point_baseline: Attribute.Integer;
+    users: Attribute.Relation<
+      'api::group.group',
+      'oneToMany',
+      'plugin::users-permissions.user'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::group.group',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::group.group',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiLoginLogLoginLog extends Schema.CollectionType {
+  collectionName: 'login_logs';
+  info: {
+    singularName: 'login-log';
+    pluralName: 'login-logs';
+    displayName: 'Login_log';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    ip: Attribute.String;
+    device: Attribute.Enumeration<['mobile', 'desktop']>;
+    isSuccess: Attribute.Boolean & Attribute.DefaultTo<true>;
+    users: Attribute.Relation<
+      'api::login-log.login-log',
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::login-log.login-log',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::login-log.login-log',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiPointLogPointLog extends Schema.CollectionType {
+  collectionName: 'point_logs';
+  info: {
+    singularName: 'point-log';
+    pluralName: 'point-logs';
+    displayName: 'Point_log';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    edit_point: Attribute.Integer & Attribute.Required & Attribute.DefaultTo<0>;
+    cause: Attribute.String;
+    balance: Attribute.Integer;
+    user: Attribute.Relation<
+      'api::point-log.point-log',
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::point-log.point-log',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::point-log.point-log',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiProductProduct extends Schema.CollectionType {
+  collectionName: 'products';
+  info: {
+    singularName: 'product';
+    pluralName: 'products';
+    displayName: 'Product';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    name: Attribute.String;
+    isDisplay: Attribute.Boolean;
+    isOpen: Attribute.Boolean;
+    url: Attribute.String;
+    image: Attribute.Media;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::product.product',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::product.product',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 declare module '@strapi/types' {
   export module Shared {
     export interface ContentTypes {
@@ -819,15 +962,19 @@ declare module '@strapi/types' {
       'admin::api-token-permission': AdminApiTokenPermission;
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
-      'api::group.group': ApiGroupGroup;
-      'api::login-log.login-log': ApiLoginLogLoginLog;
-      'api::point-log.point-log': ApiPointLogPointLog;
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;
       'plugin::i18n.locale': PluginI18NLocale;
       'plugin::users-permissions.permission': PluginUsersPermissionsPermission;
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
+      'api::announcement.announcement': ApiAnnouncementAnnouncement;
+      'api::bank.bank': ApiBankBank;
+      'api::crypto.crypto': ApiCryptoCrypto;
+      'api::group.group': ApiGroupGroup;
+      'api::login-log.login-log': ApiLoginLogLoginLog;
+      'api::point-log.point-log': ApiPointLogPointLog;
+      'api::product.product': ApiProductProduct;
     }
   }
 }

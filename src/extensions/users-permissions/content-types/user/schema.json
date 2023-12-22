@@ -105,6 +105,18 @@
       "relation": "oneToMany",
       "target": "api::point-log.point-log",
       "mappedBy": "user"
+    },
+    "banks": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::bank.bank",
+      "mappedBy": "user"
+    },
+    "cryptos": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::crypto.crypto",
+      "mappedBy": "user"
     }
   }
 }

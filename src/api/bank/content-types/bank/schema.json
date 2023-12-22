@@ -1,0 +1,33 @@
+{
+  "kind": "collectionType",
+  "collectionName": "banks",
+  "info": {
+    "singularName": "bank",
+    "pluralName": "banks",
+    "displayName": "Bank"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "bank_name": {
+      "type": "string"
+    },
+    "branch_name": {
+      "type": "string"
+    },
+    "account_name": {
+      "type": "string"
+    },
+    "account": {
+      "type": "string"
+    },
+    "user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "banks"
+    }
+  }
+}
