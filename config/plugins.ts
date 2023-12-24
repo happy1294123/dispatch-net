@@ -1,4 +1,4 @@
-export default {
+export default ({env}) => ({
   documentation: {
     enabled: true,
     config: {
@@ -9,8 +9,7 @@ export default {
       },
       'x-strapi-config': {
         // Leave empty to ignore plugins during generation
-        // plugins: [ 'upload', 'users-permissions'],
-        plugins: ['users-permissions'],
+        plugins: [ 'upload', 'users-permissions'],
         path: '/documentation',
       },
       security: [ { bearerAuth: [] } ],
@@ -19,11 +18,25 @@ export default {
         url: "http://localhost:1337/api",
         description: "Development server"
       },
-      // {
-      //   url: "https://dispatch-net.onrender.com/api",
-      //   description: "remote server"
-      // },
+      {
+        url: "https://dispatch-net.onrender.com/api",
+        description: "remote server"
+      },
     ],
     },
-  }
-}
+  },
+  upload: {
+    config: {
+      provider: 'cloudinary',
+      providerOptions: {
+        cloud_name: env('CLOUDINARY_NAME'),
+        api_key: env('CLOUDINARY_KEY'),
+        api_secret: env('CLOUDINARY_SECRET'),
+      },
+      actionOptions: {
+        upload: {},
+        delete: {},
+      },
+    },
+  },
+})
