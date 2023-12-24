@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "2023-12-24T07:15:01.596Z"
+    "x-generation-date": "2023-12-24T08:47:54.579Z"
   },
   "x-strapi-config": {
     "plugins": [
@@ -99,9 +99,6 @@
           "data": {
             "required": [
               "title",
-              "type",
-              "start",
-              "end",
               "content"
             ],
             "type": "object",
@@ -109,24 +106,14 @@
               "title": {
                 "type": "string"
               },
-              "type": {
-                "type": "string",
-                "enum": [
-                  "TOP",
-                  "NEW",
-                  "SYSTEM"
-                ]
-              },
-              "start": {
-                "type": "string",
-                "format": "date-time"
-              },
-              "end": {
-                "type": "string",
-                "format": "date-time"
-              },
               "content": {
                 "type": "string"
+              },
+              "isActive": {
+                "type": "boolean"
+              },
+              "isMarquee": {
+                "type": "boolean"
               }
             }
           }
@@ -182,33 +169,20 @@
         "type": "object",
         "required": [
           "title",
-          "type",
-          "start",
-          "end",
           "content"
         ],
         "properties": {
           "title": {
             "type": "string"
           },
-          "type": {
-            "type": "string",
-            "enum": [
-              "TOP",
-              "NEW",
-              "SYSTEM"
-            ]
-          },
-          "start": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "end": {
-            "type": "string",
-            "format": "date-time"
-          },
           "content": {
             "type": "string"
+          },
+          "isActive": {
+            "type": "boolean"
+          },
+          "isMarquee": {
+            "type": "boolean"
           },
           "createdAt": {
             "type": "string",

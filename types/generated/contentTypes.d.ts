@@ -714,16 +714,16 @@ export interface ApiAnnouncementAnnouncement extends Schema.CollectionType {
     singularName: 'announcement';
     pluralName: 'announcements';
     displayName: 'Announcement';
+    description: '';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
     title: Attribute.String & Attribute.Required;
-    type: Attribute.Enumeration<['TOP', 'NEW', 'SYSTEM']> & Attribute.Required;
-    start: Attribute.DateTime & Attribute.Required;
-    end: Attribute.DateTime & Attribute.Required;
     content: Attribute.RichText & Attribute.Required;
+    isActive: Attribute.Boolean & Attribute.DefaultTo<true>;
+    isMarquee: Attribute.Boolean & Attribute.DefaultTo<true>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
