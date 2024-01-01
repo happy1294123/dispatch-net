@@ -18,9 +18,6 @@
     "isDisplay": {
       "type": "boolean"
     },
-    "isOpen": {
-      "type": "boolean"
-    },
     "url": {
       "type": "string"
     },

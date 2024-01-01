@@ -933,7 +933,6 @@ export interface ApiProductProduct extends Schema.CollectionType {
   attributes: {
     name: Attribute.String;
     isDisplay: Attribute.Boolean;
-    isOpen: Attribute.Boolean;
     url: Attribute.String;
     image: Attribute.Media;
     createdAt: Attribute.DateTime;
