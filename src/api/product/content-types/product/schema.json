@@ -31,6 +31,19 @@
         "videos",
         "audios"
       ]
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": [
+        "fill",
+        "fillable",
+        "custom"
+      ],
+      "default": "fill",
+      "required": true
+    },
+    "order": {
+      "type": "integer"
     }
   }
 }

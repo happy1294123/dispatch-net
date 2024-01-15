@@ -935,6 +935,10 @@ export interface ApiProductProduct extends Schema.CollectionType {
     isDisplay: Attribute.Boolean;
     url: Attribute.String;
     image: Attribute.Media;
+    status: Attribute.Enumeration<['fill', 'fillable', 'custom']> &
+      Attribute.Required &
+      Attribute.DefaultTo<'fill'>;
+    order: Attribute.Integer;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
